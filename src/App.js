@@ -58,15 +58,31 @@ class App extends Component {
 			.data(dataset)  //  绑定数据
 			.enter()    //  指定选择集的enter部分
 			.append("rect")   // 添加enter部分数量的rect矩形元素
-			.attr("x", 20)
+			.attr("x", 40)
 			.attr("y", function (d, i) {
 				return i * rectHeight;
 			})
+			.transition()
+			.duration(1000)
+			// .ease("bounce")		// 效果 - 不好使
+			// .delay(function (d, i) {	//延时 -  不好使
+			// 	return 200 * i;
+			// })
 			.attr("width", function (d) {
 				return linear(d);
 			})
 			.attr("height", rectHeight - 2)
 			.attr("fill", "steelblue");
+		
+		
+			// 过渡动画 - 不好使
+			// .transition()
+			// .duration(3000)
+			// .ease("bounce")
+			// .delay(function (d, i) {	//延时
+			// 	return 200 * i;
+			// })
+
 		// var axis = d3.svg.axis()
 		//   .scale(linear)      //指定比例尺
 		//   .orient("bottom")   //指定刻度的方向
@@ -82,9 +98,11 @@ class App extends Component {
 		//   //在这里添加交互内容
 		//   console.log('this is a circle');
 		// });
-		rects.on('click',function (val,index,arr) {
-			console.log(val,index,arr);
-		});
+
+		// 点击事件
+		// rects.on('click',function (val,index,arr) {
+		// 	console.log(val,index,arr);
+		// });
 
 		// 不好使
 		// var rects = svg.selectAll(".MyRect")
@@ -221,17 +239,31 @@ class App extends Component {
 		
 		//    用于坐标轴的线性比例尺
 		var xScale = d3.scaleLinear().domain([0, 10]).range([0, 300]);
-		var yScale = d3.scaleLinear().domain([0, 10]).range([0, 500]);
+		var yScale = d3.scaleLinear().domain([10, 0]).range([0, 300]);
 		//    定义坐标轴
 		var xAxis = d3.axisBottom().scale(xScale);
-		var yAxis = d3.axisLeft().scale(yScale);
+		var yAxis = d3.axisLeft().scale(yScale)
+			// .orient('left')  // 刻度与坐标轴方向
+			// .ticks(5) // 分成5等分，有时d3会根据可用空间和它自己的计算多画几个或者少画几个
+			// .tickSubdivide(4) // 每个大刻度之间再画4个等分刻度
+			// .tickPadding(10)  // 刻度值与坐标轴之间的距离
+			.tickFormat(function (v) { // 格式化刻度值
+				return v + '天';
+			});
 		//    在svg中添加一个包含坐标轴各元素的g元素
-		var gAxis = svg.append("g").attr("transform", "translate(20,200)").on("zoom",null);		//	平移到（20,80）
-		var ggAxis = svg.append("g").attr("transform", "translate(20,200)");
+		var gAxis = svg.append("g").attr("transform", "translate(40,280)");		//	平移到坐标（20,80）
+		var ggAxis = svg.append("g").attr("transform", "translate(40,-20)");
 		//    在gAxis中绘制坐标轴
 		xAxis(gAxis);
 		yAxis(ggAxis);
-		
+		// var axis_x = d3.svg.axis().scale(scale_x)
+		// 	.orient('top')  // 刻度与坐标轴方向
+		// 	.ticks(5) // 分成5等分，有时d3会根据可用空间和它自己的计算多画几个或者少画几个
+		// 	.tickSubdivide(4) // 每个大刻度之间再画4个等分刻度
+		// 	.tickPadding(10)  // 刻度值与坐标轴之间的距离
+		// 	.tickFormat(function (v) { // 格式化刻度值
+		// 		return v + '天';
+		// 	});
 
 		
 		var rect = svg.selectAll('rect');

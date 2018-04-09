@@ -18,13 +18,13 @@ class App extends Component {
 	componentWillMount(){
 		// 在渲染前调用,在客户端也在服务端。
 		console.log('---componentWillMount---');
-		this.renderRectSvg();
+		// this.renderRectSvg();
 	};
 	componentDidMount(){
 		// 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异部操作阻塞UI)。
 		console.log('---componentDidMount---');
 		console.log('---graph---', graph);
-		this.renderForceSvg();
+		// this.renderForceSvg();
 	};
 	componentWillReceiveProps(){
 		//  在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
@@ -60,7 +60,7 @@ class App extends Component {
 			mode: collapsed ? 'vertical' : 'inline',
 		});
 	}
-	// 
+	// 柱状图
 	renderRectSvg() {
 		var width = 300,
 				height = 300;     // 画布宽高
@@ -521,7 +521,7 @@ class App extends Component {
             				</div>
 						</Content>
 						<Footer style={{ textAlign: 'center' }}>
-							Naxions ©2018 Created by Superhero Mr Wang
+							Use Ant Design ©2018 Created by Superhero Mr Wang
           				</Footer>
 					</Layout>
 					</Layout>
@@ -534,128 +534,25 @@ class App extends Component {
 				<div id="test">
 					
 				</div>
-				<svg className="force-svg" width="960" height="600"></svg>
+				{/* <svg className="force-svg" width="960" height="600"></svg> */}
 				
 				{/* ant - design */}
-				<div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
+				{/* <div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
 					<DatePicker onChange={value => this.handleChange(value)} />
 					<Button type="primary">Primary</Button>
 					<Button>Default</Button>
 					<Button type="dashed">Dashed</Button>
 					<Button type="danger">Danger</Button>
 					<Button type="">按钮</Button>
-				</div>
-				<div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
+				</div> */}
+				{/* <div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
 
-				</div>
+				</div> */}
 				{/* 回到顶部 */}
 				<BackTop />
-				Scroll down to see the bottom-right
-				<strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> gray </strong>
-				button.
 			</div>
 		);
 	}
 }
 
 export default App;
-
-
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { push } from 'react-router-redux';
-// import * as d3 from 'd3';
-// import { Row, Form } from 'antd';
-
-// import { chartReq } from './actionCreator';
-// import './Chart.less';
-
-// const WIDTH = 1900;
-// const HEIGHT = 580;
-// const R = 30;
-
-// let simulation;
-
-// class Chart extends Component {
-//   constructor(props, context) {
-//     super(props, context);
-//     this.print = this.print.bind(this);
-//     this.forceChart = this.forceChart.bind(this);
-//     this.state = {
-
-//     };
-//   }
-
-//   componentWillMount() {
-//     this.props.dispatch(push('/Chart'));
-//   }
-
-//   componentDidMount() {
-//     this.print();
-//   }
-
-//   print() {
-//     let callback = (res) => { // callback获取后台返回的数据，并存入state
-//       let nodeData = res.data.nodes;
-//       let relationData = res.data.rels;
-//       this.setState({
-//         nodeData: res.data.nodes,
-//         relationData: res.data.rels,
-//       });
-//       let nodes = [];
-//       for (let i = 0; i < nodeData.length; i++) {
-//         nodes.push({
-//           id: (nodeData[i] && nodeData[i].id) || '',
-//           name: (nodeData[i] && nodeData[i].name) || '',
-//           type: (nodeData[i] && nodeData[i].type) || '',
-//           definition: (nodeData[i] && nodeData[i].definition) || '',
-//         });
-//       }
-//       let edges = [];
-//       for (let i = 0; i < relationData.length; i++) {
-//         edges.push({
-//           id: (relationData[i] && (relationData[i].id)) || '',
-//           source: (relationData[i] && relationData[i].start.id) || '',
-//           target: (relationData[i] && relationData[i].end.id) || '',
-//           tag: (relationData[i] && relationData[i].name) || '',
-//         });
-//       }
-//       this.forceChart(nodes, edges); // d3力导向图内容
-//     };
-//     this.props.dispatch(chartReq({ param: param }, callback));
-//   }
-
-//   // func
-//   forceChart(nodes, edges) {
-//     this.refs['theChart'].innerHTML = '';
-
-//     // 函数内其余代码请看下文的**【拆解代码】**
-
-//   }
-
-//   render() {
-//     return (
-//       <Row style={{ minWidth: 900 }}>
-//         <div className="outerDiv">
-//           <div className="theChart" id="theChart" ref="theChart">
-
-//           </div>
-//         </div>
-//       </Row>
-//     );
-//   }
-// }
-
-// Chart.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-// };
-
-// function mapStateToProps(state) {
-//   return {
-
-//   };
-// }
-
-// const WrappedChart = Form.create({})(Chart);
-// export default connect(mapStateToProps)(WrappedChart);

@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import * as d3 from 'd3';
 import graph from './miserables.json';
+import {DatePicker,Button} from 'antd';
+import 'antd/dist/antd.css';
 
 // enter() : 获得数据集中比DOM元素集中多出来的数据
 // exit() ：获得DOM元素集中比数据集中多出来的数据
@@ -368,6 +370,16 @@ class App extends Component {
 		}
 
 	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			date: '',
+		};
+	};
+	handleChange(date) {
+		console.log(date,'---date---');
+		this.setState({ date });
+	};
 	render() {
 		return (
 			<div className="App">
@@ -382,6 +394,16 @@ class App extends Component {
 					
 				</div>
 				<svg className="force-svg" width="960" height="600"></svg>
+				
+				{/* ant - design */}
+				<div class="antd-box" style={{ width: 400, margin: '100px auto' }}>
+					<DatePicker onChange={value => this.handleChange(value)} />
+					<Button type="primary">Primary</Button>
+					<Button>Default</Button>
+					<Button type="dashed">Dashed</Button>
+					<Button type="danger">Danger</Button>
+					<Button type="">按钮</Button>
+				</div>
 			</div>
 		);
 	}

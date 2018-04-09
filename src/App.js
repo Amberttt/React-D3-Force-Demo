@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import * as d3 from 'd3';
 import graph from './miserables.json';
-import { DatePicker, Button, message, Layout, Menu, Breadcrumb, Icon} from 'antd';
+import { DatePicker, Button, message, Layout, Menu, Breadcrumb, Icon,BackTop} from 'antd';
 import 'antd/dist/antd.css';
 
 // 布局
@@ -469,6 +469,13 @@ class App extends Component {
 
 				{/* 第二种布局 --- 侧边布局 */}
 				<Layout className="components-layout-demo-side">
+					<Header style={{height: '150px',background: '#fff',padding: 0}}>
+						<header className="App-header">
+							<img src={logo} className="App-logo" alt="logo" />
+							<h1 className="App-title">Welcome to React and D3</h1>
+						</header>
+					</Header>
+					<Layout>
 					<Sider
 						collapsible
 						collapsed={this.state.collapsed}
@@ -478,7 +485,7 @@ class App extends Component {
 						<Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>
 							<SubMenu
 								key="sub1"
-								title={<span><Icon type="user" /><span className="nav-text">User</span></span>}
+								title={<span><Icon type="user" /><span className="nav-text">用户管理</span></span>}
 							>
 								<Menu.Item key="1">Tom</Menu.Item>
 								<Menu.Item key="2">Bill</Menu.Item>
@@ -486,39 +493,37 @@ class App extends Component {
 							</SubMenu>
 							<SubMenu
 								key="sub2"
-								title={<span><Icon type="team" /><span className="nav-text">Team</span></span>}
+								title={<span><Icon type="team" /><span className="nav-text">团队管理</span></span>}
 							>
-								<Menu.Item key="4">Team 1</Menu.Item>
-								<Menu.Item key="5">Team 2</Menu.Item>
+								<Menu.Item key="4">销售团队</Menu.Item>
+								<Menu.Item key="5">开发团队</Menu.Item>
 							</SubMenu>
 							<Menu.Item key="6">
 								<span>
 									<Icon type="file" />
-									<span className="nav-text">File</span>
+									<span className="nav-text">文件管理</span>
 								</span>
 							</Menu.Item>
 						</Menu>
 					</Sider>
 					<Layout>
 						{/* <Header style={{ background: '#fff', padding: 0 }} /> */}
-						<Header style={{height: '150px',background: '#fff',padding: 0}}>
-							<header className="App-header">
-								<img src={logo} className="App-logo" alt="logo" />
-								<h1 className="App-title">Welcome to React and D3</h1>
-							</header>
+						<Header style={{background: '#fff',padding: 0}}>
+							
 						</Header>
 						<Content style={{ margin: '0 16px' }}>
 							<Breadcrumb style={{ margin: '12px 0' }}>
-								<Breadcrumb.Item>User</Breadcrumb.Item>
+								<Breadcrumb.Item>用户管理</Breadcrumb.Item>
 								<Breadcrumb.Item>Bill</Breadcrumb.Item>
 							</Breadcrumb>
 							<div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-								Bill is a cat.
+								Bill is a cat.Ha ha ha ~
             				</div>
 						</Content>
 						<Footer style={{ textAlign: 'center' }}>
-							Ant Design ©2016 Created by Ant UED
+							Naxions ©2018 Created by Superhero Mr Wang
           				</Footer>
+					</Layout>
 					</Layout>
 				</Layout>
 
@@ -543,6 +548,11 @@ class App extends Component {
 				<div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
 
 				</div>
+				{/* 回到顶部 */}
+				<BackTop />
+				Scroll down to see the bottom-right
+				<strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> gray </strong>
+				button.
 			</div>
 		);
 	}

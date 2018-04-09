@@ -3,8 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 import * as d3 from 'd3';
 import graph from './miserables.json';
-import {DatePicker,Button} from 'antd';
+import { DatePicker, Button, message, Layout, Menu, Breadcrumb, Icon} from 'antd';
 import 'antd/dist/antd.css';
+
+// 布局
+const { Header, Content, Footer, Sider } = Layout;
+// const { SubMenu } = Menu;		// 第一种布局用到
+const SubMenu = Menu.SubMenu;
 
 // enter() : 获得数据集中比DOM元素集中多出来的数据
 // exit() ：获得DOM元素集中比数据集中多出来的数据
@@ -25,10 +30,11 @@ class App extends Component {
 		//  在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
 		console.log('---componentWillReceiveProps---');
 	};
-	shouldComponentUpdate(){
+	shouldComponentUpdate(nextProps, nextState){
 		// 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。 
 		// 可以在你确认不需要更新组件时使用
-		console.log('---shouldComponentUpdate---');
+		console.log(nextProps, nextState,'---shouldComponentUpdate---');
+		return true;
 	};
 	componentWillUpdate(){
 		// 在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
@@ -42,6 +48,18 @@ class App extends Component {
 		// 在组件从 DOM 中移除的时候立刻被调用。
 		console.log('---componentWillUnmount---');
 	};
+	// 第二种布局 --- 事件
+	state = {
+		collapsed: false,
+		mode: 'inline',
+	};
+	onCollapse = (collapsed) => {
+		console.log(collapsed);
+		this.setState({
+			collapsed,
+			mode: collapsed ? 'vertical' : 'inline',
+		});
+	}
 	// 
 	renderRectSvg() {
 		var width = 300,
@@ -377,16 +395,134 @@ class App extends Component {
 		};
 	};
 	handleChange(date) {
-		console.log(date,'---date---');
+		console.log(date, '---date---');
+		message.info('您选择的日期是: ' + date.toString());
 		this.setState({ date });
 	};
 	render() {
 		return (
 			<div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<h1 className="App-title">Welcome to React and D3</h1>
-				</header>
+				{/* <Layout>
+					<Header>Header</Header>
+					<Layout>
+						<Sider>Sider</Sider>
+						<Content>Content</Content>
+					</Layout>
+					<Footer>Footer</Footer>
+				</Layout> */}
+
+				{/* 顶部-侧边布局-通栏 */}
+				{/* <Layout>
+					<Header className="header">
+						<div className="logo" />
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							defaultSelectedKeys={['2']}
+							style={{ lineHeight: '64px' }}
+						>
+							<Menu.Item key="1">nav 1</Menu.Item>
+							<Menu.Item key="2">nav 2</Menu.Item>
+							<Menu.Item key="3">nav 3</Menu.Item>
+						</Menu>
+					</Header>
+					<Layout>
+						<Sider width={200} style={{ background: '#fff' }}>
+							<Menu
+								mode="inline"
+								defaultSelectedKeys={['1']}
+								defaultOpenKeys={['sub1']}
+								style={{ height: '100%' }}
+							>
+								<SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
+									<Menu.Item key="1">option1</Menu.Item>
+									<Menu.Item key="2">option2</Menu.Item>
+									<Menu.Item key="3">option3</Menu.Item>
+									<Menu.Item key="4">option4</Menu.Item>
+								</SubMenu>
+								<SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
+									<Menu.Item key="5">option5</Menu.Item>
+									<Menu.Item key="6">option6</Menu.Item>
+									<Menu.Item key="7">option7</Menu.Item>
+									<Menu.Item key="8">option8</Menu.Item>
+								</SubMenu>
+								<SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
+									<Menu.Item key="9">option9</Menu.Item>
+									<Menu.Item key="10">option10</Menu.Item>
+									<Menu.Item key="11">option11</Menu.Item>
+									<Menu.Item key="12">option12</Menu.Item>
+								</SubMenu>
+							</Menu>
+						</Sider>
+						<Layout style={{ padding: '0 24px 24px' }}>
+							<Breadcrumb style={{ margin: '12px 0' }}>
+								<Breadcrumb.Item>Home</Breadcrumb.Item>
+								<Breadcrumb.Item>List</Breadcrumb.Item>
+								<Breadcrumb.Item>App</Breadcrumb.Item>
+							</Breadcrumb>
+							<Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+								Content
+        					</Content>
+						</Layout>
+					</Layout>
+				</Layout> */}
+
+				{/* 第二种布局 --- 侧边布局 */}
+				<Layout className="components-layout-demo-side">
+					<Sider
+						collapsible
+						collapsed={this.state.collapsed}
+						onCollapse={this.onCollapse}
+					>
+						<div className="logo" />
+						<Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['6']}>
+							<SubMenu
+								key="sub1"
+								title={<span><Icon type="user" /><span className="nav-text">User</span></span>}
+							>
+								<Menu.Item key="1">Tom</Menu.Item>
+								<Menu.Item key="2">Bill</Menu.Item>
+								<Menu.Item key="3">Alex</Menu.Item>
+							</SubMenu>
+							<SubMenu
+								key="sub2"
+								title={<span><Icon type="team" /><span className="nav-text">Team</span></span>}
+							>
+								<Menu.Item key="4">Team 1</Menu.Item>
+								<Menu.Item key="5">Team 2</Menu.Item>
+							</SubMenu>
+							<Menu.Item key="6">
+								<span>
+									<Icon type="file" />
+									<span className="nav-text">File</span>
+								</span>
+							</Menu.Item>
+						</Menu>
+					</Sider>
+					<Layout>
+						{/* <Header style={{ background: '#fff', padding: 0 }} /> */}
+						<Header style={{height: '150px',background: '#fff',padding: 0}}>
+							<header className="App-header">
+								<img src={logo} className="App-logo" alt="logo" />
+								<h1 className="App-title">Welcome to React and D3</h1>
+							</header>
+						</Header>
+						<Content style={{ margin: '0 16px' }}>
+							<Breadcrumb style={{ margin: '12px 0' }}>
+								<Breadcrumb.Item>User</Breadcrumb.Item>
+								<Breadcrumb.Item>Bill</Breadcrumb.Item>
+							</Breadcrumb>
+							<div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+								Bill is a cat.
+            				</div>
+						</Content>
+						<Footer style={{ textAlign: 'center' }}>
+							Ant Design ©2016 Created by Ant UED
+          				</Footer>
+					</Layout>
+				</Layout>
+
+				
 				{/* <p className="App-intro">
 					To get started, edit <code>src/App.js</code> and save to reload.
 				</p> */}
@@ -396,13 +532,16 @@ class App extends Component {
 				<svg className="force-svg" width="960" height="600"></svg>
 				
 				{/* ant - design */}
-				<div class="antd-box" style={{ width: 400, margin: '100px auto' }}>
+				<div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
 					<DatePicker onChange={value => this.handleChange(value)} />
 					<Button type="primary">Primary</Button>
 					<Button>Default</Button>
 					<Button type="dashed">Dashed</Button>
 					<Button type="danger">Danger</Button>
 					<Button type="">按钮</Button>
+				</div>
+				<div className="antd-box" style={{ width: 400, margin: '100px auto' }}>
+
 				</div>
 			</div>
 		);
